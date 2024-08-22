@@ -1,0 +1,10 @@
+Passport.js被用作身份驗證中間件。它是一個非常靈活且模塊化的Node.js中間件，
+
+本地身份驗證策略（Local Strategy）
+引入必要的模塊：這段代碼首先導入了Passport.js、Passport Local、Passport JWT、bcrypt以及User模型。
+配置Passport Local Strategy：通過passport.use('login', ...)註冊了一個名為login的本地身份驗證策略。這個策略指定了用戶名和密碼的欄位名稱，並定義了一個異步函數來處理驗證邏輯。
+驗證邏輯：在驗證函數中，首先嘗試從資料庫中找到匹配給定帳號的用戶。如果找不到用戶，則拋出一個錯誤。如果找到了用戶，則使用bcrypt來比對提供的密碼和存儲在資料庫中的哈希密碼。如果密碼匹配，則通過done函數完成驗證，否則拋出一個錯誤。
+
+JWT身份驗證策略（JWT Strategy）
+配置Passport JWT Strategy：通過passport.use('jwt', ...)註冊了一個名為jwt的JWT身份驗證策略。這個策略指定了如何從請求中提取JWT、用於驗證JWT的秘鑰、是否將請求對象傳遞給驗證回調函數，以及是否忽略JWT的到期時間。
+驗證邏輯：在驗證函數中，首先檢查JWT是否已經過期。如果JWT已經過期且不是在特定的路徑下，則拋出一個錯誤。接著，從Authorization標頭中再次提取JWT，並嘗試在資料庫中找到匹配JWT載荷中的_id且擁有匹配提取到的JWT的用戶。如果找不到這樣的用戶，則拋出一個錯誤。驗證成功後，通過done函數返回包含用戶和JWT的結果。
