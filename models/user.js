@@ -40,7 +40,7 @@ const schema = new Schema(
     account: {
       type: String,
       required: [true, '使用者帳號必填'],
-      minlength: [4, '使用者帳號長度不符'],
+      minlength: [3, '使用者帳號長度不符'],
       maxlength: [20, '使用者帳號長度不符'],
       unique: true,
       validate: {
