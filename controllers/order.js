@@ -1,27 +1,11 @@
 import Order from '../models/order.js'
 import User from '../models/user.js'
-import Product from '../models/product.js'
 import { StatusCodes } from 'http-status-codes'
 
 export const create = async (req, res) => {
   try {
     // 檢查購物車有沒有東西
     if (req.user.cart.length === 0) throw new Error('EMPTY')
-    console.log('req.user', req.user)
-  console.log('=========================================');
-  console.log('req.user.cart',req.user.cart[0].quantity)
-    // console.log(req.user.cart.quantity);
-    if (req.user.cart[0].quantity > 0) {
-      const findProduct = await Product.findById(req.user.cart[0].p_id)
-      // const updatedProduct = await Product.findByIdAndUpdate(
-      //   req.user.cart[0].p_id,        // 查找的 ID
-      //   { $set: { quantity: findProduct.quantity - req.user.cart[0].quantity } }, // 更新的字段
-      //   { runValidators: true, new: true } // 選項: 運行驗證器並返回更新後的文檔
-      // ).orFail(new Error('NOT FOUND')); // 如果沒有找到文檔，則拋出錯誤
-    }
-    if (req.user.cart[0].quantity === 0) {
-      
-    }
     // 檢查有沒有下架商品
     const user = await User.findById(req.user._id, 'cart').populate('cart.p_id')
     const ok = user.cart.every(item => item.p_id.sell)
@@ -29,7 +13,7 @@ export const create = async (req, res) => {
     // 建立訂單
     await Order.create({
       user: req.user._id,
-      cart: req.user.cart
+      cart: req.user.cart,
     })
     // 清空購物車
     req.user.cart = []

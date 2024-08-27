@@ -1,8 +1,9 @@
-import mongoose, { Schema, model } from 'mongoose';
+import { Schema, model } from 'mongoose';
 
 // 从 Schema.Types 引入 ObjectId
 const { ObjectId } = Schema.Types;
 
+// 購物車
 const cartSchema = new Schema({
   p_id: {
     type: ObjectId,
@@ -19,6 +20,7 @@ const cartSchema = new Schema({
   }
 });
 
+// 訂單
 const schema = new Schema({
   user: {
     type: ObjectId,
@@ -33,10 +35,20 @@ const schema = new Schema({
       },
       message: '訂單購物車必填'
     }
-  }
-}, {
+  },
+  // initialProductsCount: {
+  //   type: Number,
+  //   required: [true, '初始產品數量必填']
+  // },
+  rooms: [{
+    type: ObjectId,
+    ref: 'rooms',
+    required: [true, '訂單房间必填']
+  }]
+},
+{
   versionKey: false,
-  timestamps: true
-});
+  timestamps: true}
+);
 
 export default model('orders', schema);

@@ -8,7 +8,7 @@ const router = Router()
 
 router.post('/', auth.jwt, admin, upload, create)
 router.get('/', get)
-router.get('/all', getAll)
+router.get('/all', getAll,auth.jwt)
 router.get('/:id', getId)
 router.patch('/:id', auth.jwt, admin, upload, edit)
 
