@@ -15,7 +15,7 @@ const app = express()
 
 app.use(rateLimit({
   windowMs: 1000 * 60 * 15,
-  max: 100,
+  max: 1000,
   standardHeaders: 'draft-7',
   legacyHeaders: false,
   statusCode: StatusCodes.TOO_MANY_REQUESTS,
