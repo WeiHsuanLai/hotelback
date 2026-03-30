@@ -42,6 +42,13 @@ app.use(cors({
   }
 }))
 
+app.get('/', cors(), (req, res) => {
+  res.status(StatusCodes.OK).json({
+    success: true,
+    message: '伺服器運作中'
+  })
+})
+
 app.use(express.json())
 app.use((_, req, res, next) => {
   res.status(StatusCodes.BAD_REQUEST).json({
