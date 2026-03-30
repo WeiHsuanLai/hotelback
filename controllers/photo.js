@@ -1,17 +1,17 @@
-import { StatusCodes } from 'http-status-codes' 
+import { StatusCodes } from 'http-status-codes'
 
-export const create = async (req, res) => {     
-  try {                                         
-    req.user.image = req.file.path              
-    await req.user.save()                       
-    res.status(StatusCodes.OK).json({           
+export const create = async (req, res) => {
+  try {
+    req.user.image = req.file.path
+    await req.user.save()
+    res.status(StatusCodes.OK).json({
       success: true,
       message: '',
-      result :req.file.path
+      result: req.file.path
     })
   } catch (error) {
-    console.log(error);
-    
+    console.log(error)
+
     if (error.name === 'ValidationError') {
       const key = Object.keys(error.errors)[0]
       const message = error.errors[key].message

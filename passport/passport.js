@@ -38,9 +38,7 @@ async (account, password, done) => {
     }
     // 如果帳號和密碼都正確，調用done函數返回用戶對象，表示身份驗證成功。
     return done(null, user, null)
-  }
-  // 根據不同的錯誤去處理
-  catch (error) {
+  } catch (error) {
     console.log(error)
     if (error.message === 'ACCOUNT') {
       return done(null, null, { message: '使用者帳號不存在' })

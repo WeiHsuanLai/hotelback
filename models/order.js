@@ -1,7 +1,7 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model } from 'mongoose'
 
 // 从 Schema.Types 引入 ObjectId
-const { ObjectId } = Schema.Types;
+const { ObjectId } = Schema.Types
 
 // 購物車
 const cartSchema = new Schema({
@@ -18,7 +18,7 @@ const cartSchema = new Schema({
   date: {
     type: [Date] // 修改
   }
-});
+})
 
 // 訂單
 const schema = new Schema({
@@ -31,7 +31,7 @@ const schema = new Schema({
     type: [cartSchema],
     validate: {
       validator(value) {
-        return value.length > 0;
+        return value.length > 0
       },
       message: '訂單購物車必填'
     }
@@ -48,7 +48,8 @@ const schema = new Schema({
 },
 {
   versionKey: false,
-  timestamps: true}
-);
+  timestamps: true
+}
+)
 
-export default model('orders', schema);
+export default model('orders', schema)
